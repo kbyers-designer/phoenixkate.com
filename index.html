@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phoenix Kate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+
+  <style>
+    :root {
+      --teal:    #5ce1e6;
+      --orange:  #fc8316;
+      --rose:    #ea526f;
+      --mid:     #a7a2a9;
+      --charcoal:#565656;
+      --void:    #282828;
+      --ink:     #141414;
+      --paper:   #f4f0eb;
+      --cream:   #faf7f3;
+
+      --display: 'Bebas Neue', sans-serif;
+      --serif:   'Cormorant Garamond', serif;
+      --body:    'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── PAGES ─── */
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-logo span { color: var(--rose); }
+    .nav-logo:hover { color: var(--orange); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--body);
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--rose); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--rose);
+    }
+
+    .hero-headline {
+      font-family: var(--display);
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .hero-headline .accent { color: var(--rose); }
+    .hero-headline .teal { color: var(--teal); -webkit-text-stroke: 0px; }
+
+    .hero-subhead {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--charcoal);
+      margin: 1.5rem 0 2.5rem;
+      line-height: 1.5;
+      max-width: 28rem;
+    }
+
+    .hero-desc {
+      font-size: 0.92rem;
+      line-height: 1.85;
+      color: var(--charcoal);
+      max-width: 26rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      font-family: var(--body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--rose);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--ink);
+      color: var(--teal);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+    }
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* SVG botanical / flame decorative art */
+    .hero-art svg {
+      width: 100%;
+      height: 100%;
+      opacity: 0.9;
+    }
+
+    .hero-tagline-vert {
+      position: absolute;
+      bottom: 3rem;
+      right: -2rem;
+      transform: rotate(90deg);
+      transform-origin: right bottom;
+      font-family: var(--display);
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.2);
+      white-space: nowrap;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      background: var(--rose);
+      padding: 0.85rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 28s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-family: var(--display);
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      color: white;
+      padding: 0 2.5rem;
+    }
+
+    .marquee-inner span.dot {
+      color: rgba(255,255,255,0.5);
+      padding: 0 0.5rem;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── ABOUT SECTION ─── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0;
+      background: var(--cream);
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .about-sidebar {
+      padding: 5rem 3rem;
+      background: var(--void);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-sidebar::before {
+      content: 'PK';
+      position: absolute;
+      bottom: -1rem;
+      left: -1rem;
+      font-family: var(--display);
+      font-size: 12rem;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .sidebar-label {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 2.5rem;
+    }
+
+    .sidebar-headline {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.3;
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-divider {
+      width: 3rem;
+      height: 2px;
+      background: var(--rose);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-platforms {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .platform-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--mid);
+      letter-spacing: 0.08em;
+    }
+
+    .platform-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
+
+    .about-content {
+      padding: 5rem 4rem;
+    }
+
+    .about-content h2 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
+
+    .about-content h2 em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rose);
+      font-size: 0.75em;
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--charcoal);
+      max-width: 38rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content p strong {
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* ─── PILLARS ─── */
+    .pillars {
+      padding: 6rem 3rem;
+      background: var(--ink);
+    }
+
+    .pillars-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .pillars-header .eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+
+    .pillars-header h2 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pillar-card {
+      background: var(--ink);
+      padding: 3rem 2.5rem;
+      transition: background 0.3s;
+    }
+
+    .pillar-card:hover {
+      background: #1e1e1e;
+    }
+
+    .pillar-number {
+      font-family: var(--display);
+      font-size: 4rem;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .pillar-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .pillar-card h3 {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .pillar-card p {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--mid);
+    }
+
+    .pillar-card .pillar-accent {
+      display: block;
+      width: 1.5rem;
+      height: 2px;
+      margin-bottom: 1rem;
+    }
+
+    /* ─── PUBLICATIONS STRIP ─── */
+    .publications {
+      padding: 5rem 3rem;
+      background: var(--paper);
+    }
+
+    .publications-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .pub-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--display);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--mid);
+    }
+
+    .pub-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .pub-card {
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 2.5rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.25s;
+      background: var(--cream);
+    }
+
+    .pub-card:hover {
+      border-color: var(--rose);
+      transform: translateY(-3px);
+    }
+
+    .pub-card-tag {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1rem;
+    }
+
+    .pub-card h3 {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: 0.8rem;
+    }
+
+    .pub-card p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--charcoal);
+    }
+
+    .pub-card-arrow {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      font-size: 1.2rem;
+      color: var(--mid);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .pub-card:hover .pub-card-arrow {
+      color: var(--rose);
+      transform: translateX(4px);
+    }
+
+    /* ─── CTA BAND ─── */
+    .cta-band {
+      padding: 6rem 3rem;
+      background: var(--rose);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-band::before {
+      content: 'PHOENIX';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--display);
+      font-size: 20vw;
+      color: rgba(0,0,0,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cta-band h2 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: white;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-band p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--rose);
+      font-family: var(--body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.8rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .btn-white:hover {
+      background: var(--ink);
+      color: var(--teal);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--void);
+      color: var(--mid);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+    }
+
+    footer .footer-logo {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      color: var(--cream);
+      letter-spacing: 0.12em;
+    }
+
+    footer .footer-logo span { color: var(--rose); }
+
+    footer .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    footer .footer-links a {
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    footer .footer-links a:hover { color: var(--teal); }
+
+    /* ─── DARK MOON COLLECTIVE PAGE ─── */
+    #page-collective {
+      background: var(--ink);
+      min-height: 100vh;
+    }
+
+    .collective-hero {
+      padding: 8rem 3rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .collective-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--display);
+      font-size: 22vw;
+      color: rgba(255,255,255,0.025);
+      white-space: nowrap;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .collective-eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .collective-headline {
+      font-family: var(--display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 0.9;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+
+    .collective-headline .moon { color: var(--teal); }
+
+    .collective-subhead {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--mid);
+      margin: 1.5rem auto 0;
+      max-width: 38rem;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* ─── COLLECTIVE INTRO ─── */
+    .collective-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.04);
+      padding: 0;
+    }
+
+    .intro-block {
+      padding: 3.5rem 2.5rem;
+      background: var(--ink);
+    }
+
+    .intro-block-num {
+      font-family: var(--display);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--rose);
+      margin-bottom: 1.2rem;
+    }
+
+    .intro-block h3 {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .intro-block p {
+      font-size: 0.87rem;
+      line-height: 1.85;
+      color: var(--mid);
+    }
+
+    /* ─── PRICING TABLE WRAPPER ─── */
+    .pricing-section {
+      padding: 5rem 3rem;
+      background: #111;
+    }
+
+    .pricing-label {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .pricing-label .eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .pricing-label h2 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+
+    .pricing-label p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--mid);
+      margin-top: 0.8rem;
+    }
+
+    .stripe-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Override Stripe table bg for dark context */
+    stripe-pricing-table {
+      --stripe-pricing-table-background-color: transparent;
+    }
+
+    /* ─── COLLECTIVE PROMISE ─── */
+    .collective-promise {
+      padding: 5rem 3rem;
+      background: var(--void);
+      text-align: center;
+    }
+
+    .promise-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .promise-inner .eyebrow {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+    }
+
+    .promise-inner blockquote {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    .promise-inner p {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--mid);
+    }
+
+    /* ─── WORKSHOP ─── */
+    .workshop {
+      padding: 6rem 3rem;
+      background: var(--cream);
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .workshop-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .workshop-eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .workshop-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .workshop-headline {
+      font-family: var(--display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .workshop-headline span { color: var(--rose); }
+
+    .workshop-subhead {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--charcoal);
+      line-height: 1.6;
+      max-width: 26rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .workshop-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem 2rem;
+      margin-bottom: 2.5rem;
+      padding: 2rem;
+      background: var(--paper);
+      border-left: 3px solid var(--rose);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta-label {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .meta-value {
+      font-family: var(--body);
+      font-size: 0.9rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .workshop-price {
+      font-family: var(--display);
+      font-size: 2rem !important;
+      color: var(--rose) !important;
+      letter-spacing: 0.05em;
+    }
+
+    .workshop-btn { display: inline-block; }
+
+    .workshop-promise {
+      background: var(--void);
+      padding: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .promise-tag {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.2rem;
+    }
+
+    .promise-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .promise-list li {
+      font-size: 0.88rem;
+      color: var(--cream);
+      line-height: 1.5;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .promise-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--rose);
+      font-size: 0.6rem;
+      top: 0.25rem;
+    }
+
+    .archetypes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .arch-card {
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      background: var(--paper);
+      transition: border-color 0.2s;
+    }
+
+    .arch-card:hover { border-color: var(--rose); }
+
+    .arch-card-full { grid-column: 1 / -1; }
+
+    .arch-name {
+      font-family: var(--display);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+
+    .arch-gift {
+      font-size: 0.75rem;
+      color: var(--charcoal);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    .workshop-note {
+      font-size: 0.83rem;
+      line-height: 1.8;
+      color: var(--charcoal);
+      font-style: italic;
+      font-family: var(--serif);
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 1.2rem;
+    }
+
+    /* ─── WORKSHOPS PAGE ─── */
+    #page-workshops { background: var(--cream); }
+
+    .wshop-hero {
+      min-height: 70vh;
+      background: var(--void);
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wshop-hero::before {
+      content: 'ARCHETYPE';
+      position: absolute;
+      bottom: -2rem;
+      left: -1rem;
+      font-family: var(--display);
+      font-size: 18vw;
+      color: rgba(255,255,255,0.03);
+      white-space: nowrap;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .wshop-hero-inner {
+      max-width: 800px;
+      position: relative;
+    }
+
+    .wshop-eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .wshop-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .wshop-headline {
+      font-family: var(--display);
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .wshop-headline em {
+      font-style: normal;
+      color: var(--rose);
+    }
+
+    .wshop-subhead {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--mid);
+      max-width: 36rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .wshop-date-badge {
+      display: inline-flex;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .wshop-date-badge span {
+      padding: 0.6rem 1.4rem;
+      font-family: var(--body);
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .wshop-date-badge span:last-child { border-right: none; }
+    .badge-day { color: var(--rose) !important; }
+
+    /* SPLIT */
+    .wshop-split {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 0;
+      align-items: start;
+    }
+
+    .wshop-premise {
+      padding: 5rem 4rem 5rem 3rem;
+      border-right: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .premise-label {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+    }
+
+    .wshop-premise p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--charcoal);
+      margin-bottom: 1.4rem;
+      max-width: 36rem;
+    }
+
+    .archetype-table {
+      margin-top: 3rem;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .at-header {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      padding: 0.8rem 1.2rem;
+      background: var(--ink);
+      font-family: var(--body);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      gap: 1rem;
+    }
+
+    .at-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      padding: 1rem 1.2rem;
+      gap: 1rem;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.83rem;
+      color: var(--charcoal);
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .at-row:hover { background: var(--paper); }
+
+    .at-name {
+      font-family: var(--display);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    /* REGISTER CARD */
+    .wshop-register {
+      padding: 3rem 2.5rem;
+      position: sticky;
+      top: 5rem;
+      background: var(--paper);
+    }
+
+    .register-card {
+      background: var(--cream);
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 2.5rem;
+    }
+
+    .register-price {
+      font-family: var(--display);
+      font-size: 5rem;
+      color: var(--rose);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .register-label {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+    .register-includes { margin-bottom: 2rem; }
+
+    .ri-title {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      margin-bottom: 1rem;
+    }
+
+    .register-includes ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .register-includes li {
+      font-size: 0.85rem;
+      color: var(--charcoal);
+      line-height: 1.5;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .register-includes li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--rose);
+      font-size: 0.55rem;
+      top: 0.3rem;
+    }
+
+    .stripe-btn-wrap {
+      margin: 1.8rem 0 1.2rem;
+    }
+
+    .register-note {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: var(--mid);
+      border-top: 1px solid rgba(0,0,0,0.07);
+      padding-top: 1.2rem;
+    }
+
+    /* FLOW */
+    .wshop-flow {
+      padding: 5rem 3rem;
+      background: var(--ink);
+    }
+
+    .wshop-flow-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .flow-label {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 3rem;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 100px 1fr 2fr;
+      gap: 2rem;
+      padding: 1.4rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .flow-step:last-child { border-bottom: none; }
+    .flow-step:hover { background: rgba(255,255,255,0.03); }
+
+    .flow-time {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--rose);
+    }
+
+    .flow-title {
+      font-family: var(--display);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+    }
+
+    .flow-desc {
+      font-size: 0.83rem;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 6rem 1.5rem 3rem; }
+      .about { grid-template-columns: 1fr; }
+      .about-sidebar { padding: 3rem 1.5rem; }
+      .about-content { padding: 3rem 1.5rem; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .pub-cards { grid-template-columns: 1fr; }
+      .publications-inner { grid-template-columns: 1fr; }
+      .workshop-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .workshop-meta { grid-template-columns: 1fr 1fr; }
+      
+      .collective-intro { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+
+    /* ─── ENTRANCE ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.25s; }
+    .delay-3 { animation-delay: 0.4s; }
+    .delay-4 { animation-delay: 0.55s; }
+    .delay-5 { animation-delay: 0.7s; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVIGATION ─── -->
+  <nav>
+    <div class="nav-logo" onclick="showPage('home')">PHOENIX <span>KATE</span></div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" class="active" id="nav-home">About</a></li>
+      <li><a href="https://phoenixkate.substack.com" target="_blank">Feathered Chronicles</a></li>
+      <li><a onclick="showPage('workshops')" id="nav-workshops">Workshops</a></li>
+      <li><a onclick="showPage('collective')" id="nav-collective">Dark Moon Collective</a></li>
+      <li><a href="https://substack.com/@phoenixkate" target="_blank">Join the Wild Side</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════════════════════
+       PAGE: HOME
+  ══════════════════════════════ -->
+  <div id="page-home" class="page active">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow fade-up delay-1">Mythology · Shadow Work · Fierce Becoming</div>
+
+        <h1 class="hero-headline fade-up delay-2">
+          PHOENIX<br>
+          <span class="accent">KATE</span>
+        </h1>
+
+        <p class="hero-subhead fade-up delay-3">
+          Where myth becomes medicine and the dark is not the enemy.
+        </p>
+
+        <p class="hero-desc fade-up delay-4">
+          Writer. Wildcrafter. Wildlife rehabilitator. I work at the intersection of ancient story and modern survival, writing for people who have never fit the mold and never wanted to. This is not self-help. This is reckoning.
+        </p>
+
+        <div class="btn-group fade-up delay-5">
+          <button class="btn btn-primary" onclick="showPage('collective')">Join the Collective</button>
+          <a class="btn btn-ghost" href="https://phoenixkate.substack.com" target="_blank">Read the Work</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-art">
+          <!-- Decorative SVG: stylized flame / botanical / moth motif -->
+          <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ea526f" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="glow2" cx="50%" cy="30%" r="40%">
+                <stop offset="0%" stop-color="#5ce1e6" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#282828" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Background atmosphere -->
+            <rect width="600" height="800" fill="#141414"/>
+            <circle cx="300" cy="400" r="350" fill="url(#glow1)"/>
+            <circle cx="300" cy="200" r="280" fill="url(#glow2)"/>
+
+            <!-- Thin botanical stems -->
+            <g stroke="#a7a2a9" stroke-width="0.6" fill="none" opacity="0.4">
+              <line x1="300" y1="700" x2="300" y2="200"/>
+              <line x1="300" y1="600" x2="180" y2="450"/>
+              <line x1="300" y1="600" x2="420" y2="450"/>
+              <line x1="300" y1="520" x2="150" y2="380"/>
+              <line x1="300" y1="520" x2="450" y2="380"/>
+              <line x1="300" y1="450" x2="200" y2="320"/>
+              <line x1="300" y1="450" x2="400" y2="320"/>
+              <line x1="300" y1="380" x2="240" y2="260"/>
+              <line x1="300" y1="380" x2="360" y2="260"/>
+            </g>
+
+            <!-- Leaf shapes -->
+            <g fill="#5ce1e6" opacity="0.18" stroke="#5ce1e6" stroke-width="0.5">
+              <ellipse cx="180" cy="445" rx="28" ry="10" transform="rotate(-35 180 445)"/>
+              <ellipse cx="420" cy="445" rx="28" ry="10" transform="rotate(35 420 445)"/>
+              <ellipse cx="150" cy="375" rx="24" ry="9" transform="rotate(-40 150 375)"/>
+              <ellipse cx="450" cy="375" rx="24" ry="9" transform="rotate(40 450 375)"/>
+              <ellipse cx="200" cy="315" rx="20" ry="8" transform="rotate(-45 200 315)"/>
+              <ellipse cx="400" cy="315" rx="20" ry="8" transform="rotate(45 400 315)"/>
+              <ellipse cx="240" cy="255" rx="16" ry="7" transform="rotate(-50 240 255)"/>
+              <ellipse cx="360" cy="255" rx="16" ry="7" transform="rotate(50 360 255)"/>
+            </g>
+
+            <!-- Flame core -->
+            <g fill="none">
+              <path d="M300 680 C280 640 240 600 260 550 C270 520 300 510 300 490
+                        C300 510 330 520 340 550 C360 600 320 640 300 680Z"
+                    fill="#fc8316" opacity="0.7"/>
+              <path d="M300 640 C285 610 265 580 278 545 C286 525 300 515 300 500
+                        C300 515 314 525 322 545 C335 580 315 610 300 640Z"
+                    fill="#ea526f" opacity="0.8"/>
+              <path d="M300 600 C290 580 278 558 285 535 C291 520 300 514 300 505
+                        C300 514 309 520 315 535 C322 558 310 580 300 600Z"
+                    fill="#fef3e2" opacity="0.6"/>
+            </g>
+
+            <!-- Moon circle -->
+            <circle cx="300" cy="160" r="55" fill="none" stroke="#a7a2a9" stroke-width="0.8" opacity="0.5"/>
+            <circle cx="300" cy="160" r="45" fill="none" stroke="#a7a2a9" stroke-width="0.3" opacity="0.3"/>
+            <!-- Crescent cut -->
+            <circle cx="320" cy="155" r="48" fill="#141414"/>
+            <circle cx="300" cy="160" r="55" fill="none" stroke="#5ce1e6" stroke-width="0.6" opacity="0.35"/>
+
+            <!-- Small star accents -->
+            <g fill="#fef3e2" opacity="0.5">
+              <circle cx="150" cy="120" r="1.5"/>
+              <circle cx="460" cy="90" r="1"/>
+              <circle cx="80"  cy="200" r="1"/>
+              <circle cx="520" cy="180" r="1.5"/>
+              <circle cx="200" cy="60"  r="1"/>
+              <circle cx="400" cy="50"  r="1.5"/>
+              <circle cx="540" cy="300" r="1"/>
+              <circle cx="60"  cy="350" r="1"/>
+            </g>
+
+            <!-- Brand name watermark -->
+            <text x="300" y="758" text-anchor="middle"
+                  font-family="'Bebas Neue', sans-serif"
+                  font-size="11" letter-spacing="8"
+                  fill="rgba(255,255,255,0.18)">PHOENIX KATE</text>
+          </svg>
+        </div>
+        <div class="hero-tagline-vert">The Feathered Chronicles</div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-inner">
+        <span>Shadow Work</span><span class="dot">✦</span>
+        <span>Myth & Story</span><span class="dot">✦</span>
+        <span>Goddess Archetypes</span><span class="dot">✦</span>
+        <span>Dark Moon Medicine</span><span class="dot">✦</span>
+        <span>Wildlife & Wild Knowing</span><span class="dot">✦</span>
+        <span>No Bypass. No Shortcuts.</span><span class="dot">✦</span>
+        <span>The Feathered Chronicles</span><span class="dot">✦</span>
+        <!-- Duplicate for seamless loop -->
+        <span>Shadow Work</span><span class="dot">✦</span>
+        <span>Myth & Story</span><span class="dot">✦</span>
+        <span>Goddess Archetypes</span><span class="dot">✦</span>
+        <span>Dark Moon Medicine</span><span class="dot">✦</span>
+        <span>Wildlife & Wild Knowing</span><span class="dot">✦</span>
+        <span>No Bypass. No Shortcuts.</span><span class="dot">✦</span>
+        <span>The Feathered Chronicles</span><span class="dot">✦</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="about">
+      <div class="about-sidebar">
+        <div class="sidebar-label">The Writer</div>
+        <h2 class="sidebar-headline">Licensed rehabilitator. Investigative journalist. Mythologist of the living world.</h2>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-platforms">
+          <div class="platform-item"><span class="platform-dot"></span> The Feathered Chronicles (Substack)</div>
+          <div class="platform-item"><span class="platform-dot"></span> MoonX Articles</div>
+          <div class="platform-item"><span class="platform-dot"></span> WildTomorrow (investigative)</div>
+          <div class="platform-item"><span class="platform-dot"></span> Dark Moon Collective (membership)</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <h2>THE WORK <em>is real.</em></h2>
+        <p>
+          I write about gods and wounds and the wild places humans are afraid to look. I draw on three decades of experience in design, years of hands-on wildlife rehabilitation, and a life of being the person who figured things out the hard way because no one handed her a map.
+        </p>
+        <p>
+          Phoenix Kate is the publishing arm of that life. You will find <strong>shadow work rooted in goddess archetypes</strong>, mythology that does not sanitize the dark, and essays that ask the questions most wellness content runs from.
+        </p>
+        <p>
+          The Feathered Chronicles publishes on Substack. MoonX carries the work to broader audiences with care-forward framing. The Dark Moon Collective is the membership community for readers who want to go deeper. All of it is built for people who never needed rescuing, only the permission to be exactly this.
+        </p>
+      </div>
+    </section>
+
+    <!-- PILLARS -->
+    <section class="pillars">
+      <div class="pillars-header">
+        <div class="eyebrow">What lives here</div>
+        <h2>THREE THREADS</h2>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span class="pillar-number">01</span>
+          <span class="pillar-icon">🌑</span>
+          <span class="pillar-accent" style="background: var(--teal);"></span>
+          <h3>SHADOW WORK</h3>
+          <p>Goddess archetype frameworks for the parts of yourself you were taught to disown. Morrigan. Hecate. Kali. Inanna. These are not cautionary tales. They are blueprints.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-number">02</span>
+          <span class="pillar-icon">🌿</span>
+          <span class="pillar-accent" style="background: var(--orange);"></span>
+          <h3>MYTH & STORY</h3>
+          <p>Fiction, serial narrative, and mythological deep dives that treat the old stories as living systems. The gods are not metaphors. They are patterns that run through everything.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-number">03</span>
+          <span class="pillar-icon">🔥</span>
+          <span class="pillar-accent" style="background: var(--rose);"></span>
+          <h3>WILD KNOWING</h3>
+          <p>Essays from the field: wildlife rehabilitation, conservation, and what thirty years in the wild teaches you about survival, adaptation, and what it costs to care for broken things.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section class="publications">
+      <div class="publications-inner">
+        <div class="pub-label">Publications</div>
+        <div class="pub-cards">
+          <div class="pub-card" onclick="window.open('https://phoenixkate.substack.com','_blank')">
+            <div class="pub-card-tag">Substack · Free & Paid</div>
+            <h3>The Feathered Chronicles</h3>
+            <p>Essays, shadow work guides, fiction, and mythological deep dives. Three tiers: Gathering (free), Circle ($7/mo), Forge ($15/mo).</p>
+            <span class="pub-card-arrow">→</span>
+          </div>
+          <div class="pub-card" onclick="showPage('collective')">
+            <div class="pub-card-tag">Membership Community</div>
+            <h3>Dark Moon Collective</h3>
+            <p>The inner circle for deeper work, longer conversations, and direct access. Built for people ready to stop hovering at the edge.</p>
+            <span class="pub-card-arrow">→</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section class="cta-band">
+      <h2>READY TO GO DEEPER?</h2>
+      <p>The Dark Moon Collective is waiting for you.</p>
+      <button class="btn-white" onclick="showPage('collective')">See Membership Options</button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">PHOENIX <span>KATE</span></div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home')">About</a></li>
+        <li><a href="https://phoenixkate.substack.com" target="_blank">Substack</a></li>
+        <li><a onclick="showPage('collective')">Dark Moon Collective</a></li>
+      </ul>
+      <div style="font-size:0.72rem; letter-spacing:0.1em;">© Phoenix Kate · All Rights Reserved</div>
+    </footer>
+
+  </div><!-- /page-home -->
+
+  <!-- ══════════════════════════════
+       PAGE: WORKSHOPS
+  ══════════════════════════════ -->
+  <div id="page-workshops" class="page">
+
+    <!-- HERO -->
+    <section class="wshop-hero">
+      <div class="wshop-hero-inner">
+        <div class="wshop-eyebrow">Live Online · 90 Minutes · Replay Included</div>
+        <h1 class="wshop-headline">THE ARCHETYPE<br>THAT <em>SURVIVED</em> YOU</h1>
+        <p class="wshop-subhead">A mythology-led shadow work workshop to name the self that carried you through — and learn what it needs now.</p>
+        <div class="wshop-date-badge">
+          <span class="badge-day">Sunday</span>
+          <span class="badge-date">June 14, 2026</span>
+          <span class="badge-time">4:00 PM Central</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPLIT: PREMISE + REGISTER -->
+    <section class="wshop-split">
+
+      <div class="wshop-premise">
+        <div class="premise-label">The Work</div>
+        <p>You survived. But survival leaves a shape inside you. An archetype: a pattern of being that formed when you needed it most, that protected something real, and that is still here — still running — whether you invited it to stay or not.</p>
+        <p>This workshop is not about fixing that self. It is about recognizing it. Naming it. Understanding what it gave you and what it costs you now. And finding one small way to work with it instead of around it.</p>
+        <p>No clinical framework. No forced breakthrough. Mythology and shadow work as the actual tools.</p>
+
+        <div class="archetype-table">
+          <div class="at-header">
+            <span>Archetype</span>
+            <span>Gift</span>
+            <span>Cost</span>
+          </div>
+          <div class="at-row">
+            <span class="at-name">The Feral Child</span>
+            <span>Instinct, honesty, refusal</span>
+            <span>Difficulty receiving care</span>
+          </div>
+          <div class="at-row">
+            <span class="at-name">The Wounded Oracle</span>
+            <span>Perception, intuition, truth</span>
+            <span>Hypervigilance, isolation</span>
+          </div>
+          <div class="at-row">
+            <span class="at-name">The Firekeeper</span>
+            <span>Devotion, endurance, hope</span>
+            <span>Exhaustion, over-responsibility</span>
+          </div>
+          <div class="at-row">
+            <span class="at-name">The Exiled Queen</span>
+            <span>Authority, dignity, discernment</span>
+            <span>Self-erasure, guardedness</span>
+          </div>
+          <div class="at-row">
+            <span class="at-name">The Threshold Walker</span>
+            <span>Adaptability, transformation</span>
+            <span>Rootless, unfinished</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wshop-register">
+        <div class="register-card">
+          <div class="register-price">$33</div>
+          <div class="register-label">One-time · Replay included</div>
+
+          <div class="register-includes">
+            <div class="ri-title">You leave with</div>
+            <ul>
+              <li>Your likely survival archetype</li>
+              <li>The pattern it names</li>
+              <li>The gift inside it</li>
+              <li>The cost of staying there too long</li>
+              <li>One small ritual or prompt for working with it now</li>
+              <li>Take-home PDF: archetype overview, prompts, worksheet</li>
+            </ul>
+          </div>
+
+          <div class="stripe-btn-wrap">
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+              buy-button-id="buy_btn_1TcbM7PjwSJ5iG4n5pXBPuMR"
+              publishable-key="pk_live_51SoM49PjwSJ5iG4nH9QaI8NvSyHolSAE8tCCOQH31oY6BJ6QkQuyw2o1toHJG61QmDRS6qEvqaSXcXcJ8mL2vVa300w3XgZorx">
+            </stripe-buy-button>
+          </div>
+
+          <p class="register-note">Survival-literate. Not clinical. Not self-help-polished. This is a space for people who have been through it and want language for who they became.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- WHAT TO EXPECT -->
+    <section class="wshop-flow">
+      <div class="wshop-flow-inner">
+        <div class="flow-label">Workshop Flow</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <span class="flow-time">0–10 min</span>
+            <span class="flow-title">Opening the Threshold</span>
+            <span class="flow-desc">Set tone, safety, and container. This is reflection, not therapy.</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-time">10–20 min</span>
+            <span class="flow-title">What Is a Survival Archetype?</span>
+            <span class="flow-desc">The shape survival took inside you — explained through myth.</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-time">20–40 min</span>
+            <span class="flow-title">Meet the Five Archetypes</span>
+            <span class="flow-desc">Each one with its pattern, gift, cost, and mythic image.</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-time">40–55 min</span>
+            <span class="flow-title">Self-Identification Prompts</span>
+            <span class="flow-desc">Guided journaling to feel which one is closest to yours.</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-time">55–70 min</span>
+            <span class="flow-title">The Gift and the Cost</span>
+            <span class="flow-desc">Name what the archetype protected — and what it may now be limiting.</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-time">70–82 min</span>
+            <span class="flow-title">The Ritual / Reframe</span>
+            <span class="flow-desc">One small practice: what does this archetype need now?</span>
+          </div>
+          <div class="flow-step">
+            <span class="flow-time">82–90 min</span>
+            <span class="flow-title">Closing + Next Door</span>
+            <span class="flow-desc">Where to go from here if you want to keep going.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">PHOENIX <span>KATE</span></div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home')">About</a></li>
+        <li><a onclick="showPage('workshops')">Workshops</a></li>
+        <li><a onclick="showPage('collective')">Dark Moon Collective</a></li>
+      </ul>
+      <div style="font-size:0.72rem; letter-spacing:0.1em;">© Phoenix Kate · All Rights Reserved</div>
+    </footer>
+
+  </div><!-- /page-workshops -->
+
+  <!-- ══════════════════════════════
+       PAGE: DARK MOON COLLECTIVE
+  ══════════════════════════════ -->
+  <div id="page-collective" class="page">
+
+    <div class="collective-hero">
+      <div class="collective-bg-text">COLLECTIVE</div>
+      <div class="collective-eyebrow">Membership · Deep Work · Inner Circle</div>
+      <h1 class="collective-headline">DARK <span class="moon">MOON</span><br>COLLECTIVE</h1>
+      <p class="collective-subhead">
+        For those who have outgrown the surface. Come for the work. Stay for the reckoning.
+      </p>
+    </div>
+
+    <div class="collective-intro">
+      <div class="intro-block">
+        <div class="intro-block-num">01 / $5 / MONTH</div>
+        <h3>DARK MOON LETTERS</h3>
+        <p>One personal letter per month, delivered directly to your inbox. Mythology references and shadow work reflections woven in naturally. No assignments. No pressure. Just words. Includes Discord community access.</p>
+      </div>
+      <div class="intro-block">
+        <div class="intro-block-num">02 / $9 / MONTH</div>
+        <h3>THE FLEXIBLE GRIMOIRE</h3>
+        <p>A mythology deep dive (the real story, not the sanitized version), a shadow theme exploration rooted in that myth, a modular practice broken into standalone pieces, and a reflection prompt. Optional. Not graded. No one is watching. Discord included.</p>
+      </div>
+      <div class="intro-block">
+        <div class="intro-block-num">03 / $15 / MONTH</div>
+        <h3>THE ORACLE BUNDLE</h3>
+        <p>Everything in The Flexible Grimoire, plus a shadow work prompt set (10–15 prompts), a themed tarot or oracle spread with guidance notes, and a printable: altar card, ritual sheet, or journal page. Full Discord access included.</p>
+      </div>
+    </div>
+
+    <!-- STRIPE PRICING TABLE -->
+    <div class="pricing-section">
+      <div class="pricing-label">
+        <div class="eyebrow">Membership Tiers</div>
+        <h2>CHOOSE YOUR THRESHOLD</h2>
+        <p>Every tier is a valid entry point. Pick the one that's honest for you right now.</p>
+      </div>
+      <div class="stripe-wrapper">
+        <stripe-pricing-table
+          pricing-table-id="prctbl_1TcocQPjwSJ5iG4nxkkemcad"
+          publishable-key="pk_live_51SoM49PjwSJ5iG4nH9QaI8NvSyHolSAE8tCCOQH31oY6BJ6QkQuyw2o1toHJG61QmDRS6qEvqaSXcXcJ8mL2vVa300w3XgZorx">
+        </stripe-pricing-table>
+      </div>
+    </div>
+
+    <!-- PROMISE -->
+    <div class="collective-promise">
+      <div class="promise-inner">
+        <div class="eyebrow">The commitment</div>
+        <blockquote>"Figure out what's right and then do it."</blockquote>
+        <p>That is the ethic this membership runs on. I will show up for the work, tell you the truth, and build something worth your trust. That is not a tagline. It is the terms.</p>
+      </div>
+    </div>
+
+    <!-- FOOTER (collective) -->
+    <footer>
+      <div class="footer-logo">PHOENIX <span>KATE</span></div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home')">About</a></li>
+        <li><a href="https://phoenixkate.substack.com" target="_blank">Substack</a></li>
+        <li><a onclick="showPage('collective')">Dark Moon Collective</a></li>
+      </ul>
+      <div style="font-size:0.72rem; letter-spacing:0.1em;">© Phoenix Kate · All Rights Reserved</div>
+    </footer>
+
+  </div><!-- /page-collective -->
+
+  <script>
+    function showPage(id) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      // Show target
+      document.getElementById('page-' + id).classList.add('active');
+      // Update nav active states
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      if (id === 'home')       document.getElementById('nav-home')?.classList.add('active');
+      if (id === 'collective') document.getElementById('nav-collective')?.classList.add('active');
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  </script>
+
+</body>
+</html>
