@@ -1,0 +1,369 @@
+/* Phoenix Kate site theme: twilight. Deep plum night, pastel-to-warm twilight accents, constellation gold. */
+
+:root {
+  --night: #17102e;
+  --night-deep: #0f0a20;
+  --plum: #2b1b4d;
+  --lavender: #c9b6e4;
+  --rose: #e8a2a2;
+  --peach: #f0c6a8;
+  --gold: #d9a441;
+  --cream: #f3ead9;
+  --cream-dim: #cfc3b4;
+  --card: #1f1538;
+  --card-edge: rgba(217, 164, 65, 0.28);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', 'Avenir Next', 'Segoe UI', sans-serif;
+  font-weight: 300;
+  background: var(--night);
+  color: var(--cream);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* faint star field across the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(243, 234, 217, 0.7), transparent),
+    radial-gradient(1px 1px at 68% 8%, rgba(243, 234, 217, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 84% 30%, rgba(240, 198, 168, 0.7), transparent),
+    radial-gradient(1px 1px at 32% 66%, rgba(201, 182, 228, 0.6), transparent),
+    radial-gradient(1px 1px at 55% 88%, rgba(243, 234, 217, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 92% 72%, rgba(232, 162, 162, 0.6), transparent),
+    radial-gradient(1px 1px at 5% 80%, rgba(243, 234, 217, 0.5), transparent),
+    radial-gradient(1px 1px at 44% 40%, rgba(243, 234, 217, 0.45), transparent);
+}
+
+main, .site-header, .site-footer { position: relative; z-index: 1; }
+
+/* ---------- header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(15, 10, 32, 0.88);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(217, 164, 65, 0.18);
+}
+
+.nav {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+
+.nav-links a {
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav-links a:hover { color: var(--peach); }
+
+.nav-cta {
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  color: var(--gold) !important;
+}
+
+.nav-cta:hover { background: rgba(217, 164, 65, 0.12); color: var(--peach) !important; }
+
+/* ---------- hero ---------- */
+
+.hero {
+  text-align: center;
+  padding: 6rem 1.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(126, 74, 150, 0.35), transparent 70%),
+    radial-gradient(40% 35% at 80% 100%, rgba(217, 164, 65, 0.12), transparent 70%);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  margin-bottom: 1.2rem;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(3.2rem, 9vw, 5.5rem);
+  letter-spacing: 0.03em;
+  background: linear-gradient(160deg, var(--cream) 30%, var(--peach) 65%, var(--rose) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.4rem;
+}
+
+.hero-sub {
+  max-width: 620px;
+  margin: 0 auto 2.4rem;
+  font-size: 1.15rem;
+  color: var(--cream-dim);
+}
+
+.hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.85rem 2rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-gold {
+  background: linear-gradient(150deg, #e0aa4e, #c08c2e);
+  color: #241708;
+  font-weight: 500;
+  box-shadow: 0 4px 24px rgba(217, 164, 65, 0.3);
+}
+
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(217, 164, 65, 0.45); }
+
+.btn-ghost {
+  border: 1px solid rgba(201, 182, 228, 0.5);
+  color: var(--lavender);
+}
+
+.btn-ghost:hover { border-color: var(--lavender); background: rgba(201, 182, 228, 0.08); }
+
+.btn-small { padding: 0.65rem 1.5rem; font-size: 0.85rem; }
+
+.text-link { color: var(--peach); text-decoration: none; border-bottom: 1px solid rgba(240, 198, 168, 0.4); }
+.text-link:hover { border-color: var(--peach); }
+
+/* ---------- sections ---------- */
+
+.section {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+}
+
+.section-alt {
+  background: linear-gradient(180deg, rgba(43, 27, 77, 0.5), rgba(23, 16, 46, 0.2));
+  border-top: 1px solid rgba(217, 164, 65, 0.12);
+  border-bottom: 1px solid rgba(217, 164, 65, 0.12);
+  max-width: none;
+}
+
+.section-alt > * { max-width: 1080px; margin-left: auto; margin-right: auto; }
+
+.section h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: 2.4rem;
+  text-align: center;
+  margin-bottom: 1.2rem;
+  color: var(--cream);
+}
+
+.section h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1rem auto 0;
+  opacity: 0.7;
+}
+
+.section-intro {
+  max-width: 640px;
+  margin: 0 auto 3rem;
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 1.08rem;
+}
+
+/* ---------- work cards ---------- */
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.4rem;
+  margin-bottom: 2.6rem;
+}
+
+.work-card {
+  background: var(--card);
+  border: 1px solid rgba(201, 182, 228, 0.16);
+  border-radius: 14px;
+  padding: 1.8rem;
+}
+
+.work-card h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--peach);
+  margin-bottom: 0.6rem;
+}
+
+.work-card p { color: var(--cream-dim); font-size: 0.98rem; }
+
+.read-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- products ---------- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.4rem;
+  margin-bottom: 2.4rem;
+}
+
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: 14px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+}
+
+.product-card h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--cream);
+}
+
+.product-sub { color: var(--lavender); font-size: 0.9rem; letter-spacing: 0.04em; }
+
+.product-card p { color: var(--cream-dim); font-size: 0.96rem; }
+
+.price {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.7rem;
+  color: var(--gold);
+  margin-top: auto;
+  padding-top: 0.6rem;
+}
+
+.bundle-card {
+  background: linear-gradient(150deg, #2b1b4d, #1f1538 60%, #2a1a2e);
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  padding: 2.4rem;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(217, 164, 65, 0.18);
+  margin-bottom: 1.2rem;
+}
+
+.bundle-card h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.bundle-card p { color: var(--cream-dim); max-width: 560px; margin: 0 auto; }
+
+.bundle-card .price { font-size: 2.2rem; margin: 0.8rem 0 1.2rem; }
+
+.save {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  color: var(--peach);
+  letter-spacing: 0.06em;
+}
+
+.fine-print { text-align: center; color: var(--cream-dim); font-size: 0.9rem; opacity: 0.8; }
+
+/* ---------- subscribe + footer ---------- */
+
+.subscribe { text-align: center; }
+
+.site-footer {
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+  border-top: 1px solid rgba(217, 164, 65, 0.12);
+}
+
+.footer-wordmark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: var(--cream);
+}
+
+.footer-links { display: flex; gap: 1.4rem; justify-content: center; margin-bottom: 1rem; }
+
+.footer-links a {
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-links a:hover { color: var(--peach); }
+
+.copyright { color: var(--cream-dim); font-size: 0.85rem; opacity: 0.7; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 640px) {
+  .hero { padding: 4rem 1.2rem 3.5rem; }
+  .nav { justify-content: center; text-align: center; }
+  .section { padding: 3rem 1.2rem; }
+  .bundle-card { padding: 1.8rem 1.2rem; }
+}
